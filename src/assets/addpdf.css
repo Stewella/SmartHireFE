@@ -1,0 +1,29 @@
+.view-container .pdf-container{
+    /*width: 100%;*/
+    /*height: 95%;*/
+    height: 340px;
+    background-color: #e4e4e4;
+    /*overflow-x: scroll;*/
+    /*overflow: scroll;*/
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+}
+
+.view-container .blank-preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.error-msg{
+    width: 100%;
+    color: red;
+    font-size: 14px;
+    /*font-weight: 600;*/
+}
+
+.custom-file-label, .custom-file-input {
+    z-index: 0;
+}

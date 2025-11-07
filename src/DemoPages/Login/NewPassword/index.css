@@ -1,0 +1,32 @@
+.pwd-container {
+    position: relative;
+    width: 320px;
+}
+
+.pwd-container .formGroup {
+    padding: 5px 30px 5px 10px;
+    font-size: 20px;
+}
+
+.pwd-container i {
+    margin-right: auto;
+    cursor: pointer;
+    position: absolute;
+    width: 20px;
+    right: 8px;
+    top: 8px;
+}
+
+.eye-password {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 40px;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+

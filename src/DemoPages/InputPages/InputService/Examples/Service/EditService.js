@@ -1,0 +1,110 @@
+import React, { Component } from 'react';
+import axios from 'axios';
+import { Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import Swal from 'sweetalert2';
+import {SERVICE} from "../../../../../config/config";
+
+export default class CardsEditService extends Component{
+    constructor(props) {
+        super(props)
+        this.state = this.initialState;
+
+    }
+
+    initialState = {
+        id: this.props.data.id,
+        service: this.props.data.service,
+        shortService: this.props.data.shortService,
+    }
+
+    options = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin' : 'http://localhost:3000'
+        }
+    };
+
+    submitData = event => {
+        event.preventDefault();
+
+        const dataService = {
+            id: this.props.data.id,
+            service: this.state.service,
+            shortService: this.props.data.shortService,
+
+        };
+        axios.post(SERVICE.JAVA_SERVICE + "/service", dataService, this.options)
+        .then((response) => {
+            // if(response.data.status === 200) {
+            //     this.setState(this.props.toggle);
+            //     alert("Sukses!")
+            // } else {
+            //     alert(response.data.message);
+            // }
+            // this.componentDidMount();
+            if (response.data != null) {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    onOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Data berhasil disimpan'
+                })
+            }
+            this.setState(this.props.toggle);
+        })
+
+    }
+
+    dataChange = event => {
+        this.setState({
+            [event.target.name]:event.target.value
+        })
+    }
+
+    render() {
+
+        const closeBtn = <button className="close" onClick={this.props.toggle}>&times;</button>;
+        return (
+            <Modal
+                isOpen={this.props.isOpen}
+                toggle={this.props.toggle}>
+                <ModalHeader toggle={this.props.toggle} close={closeBtn} style={{ backgroundColor: "#C0D39A" }}>
+                    {/* <FontAwesomeIcon icon={faTshirt} /> */}
+                    <span>  Edit Service </span>
+                </ModalHeader>
+                <ModalBody>
+                <Form onSubmit={this.submitData} id="formService">
+                    <FormGroup>
+                        <Label for="service"><b>Service Name</b></Label>
+                        <Input type="text" name="service" id="service"
+                            placeholder="Service Name"
+                            defaultValue={this.props.data.service} required
+                            onChange={this.dataChange}/>
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="shortService"><b>Service ShortName</b></Label>
+                        <Input type="text" name="shortService" id="shortService"
+                            placeholder="Service ShortName" disabled
+                            defaultValue={this.props.data.shortService} required
+                            onChange={this.dataChange}/>
+                    </FormGroup>
+
+                </Form>
+                </ModalBody>
+                <ModalFooter>
+                    <Button onClick={this.submitData} type="submit" color="success"  className="mt-1">Submit</Button>
+                </ModalFooter>
+            </Modal>
+        )
+    }
+}
